@@ -20,8 +20,7 @@ while not stop:
     response=input("do you want to continue: y or n")
     if response=="n":
         stop=True
-print("Student details")
-for student in new_school.students:
+for student in new_school.generate_student():
     student.display_student_details()
 print("Advanced school students:")
 new_advanced_school=AdvancedSchool()
