@@ -1,16 +1,23 @@
-import uuid
-
-
 class Student:
+    id=100
     def __init__(self):
-        self.student_id = uuid.uuid4()
+        Student.id+=1
+        self.student_id = Student.id
         self.name = input("student name: ")
         self.grades = []
         self.average_grade = 0
 
     def add_grades(self):
-            for i in range(5):
-                self.grades.append(input("enter grade:"))
+            try:
+                for i in range(5):
+                    grade=int(input("enter grade:"))
+                    if grade<0 or grade>100:
+                        raise ValueError
+                    else:
+                        self.grades.append(grade)
+            except ValueError:
+               print("Invalid grade.enter a grade between 0 and 100")
+
 
     def calculate_average_grade(self):
         grade_sum = 0
@@ -33,26 +40,30 @@ class School:
 
     def add_student(self):
         new_student = Student()
+        new_student.add_grades()
         self.students.append(new_student)
 
     def remove_student(self, student_id):
-        student_found = False
-        for student in self.students:
-            if student.student_id == student_id:
-                self.students.remove(student)
-                print("student removed")
-                student_found = True
+        try:
+            student_found = False
+            for student in self.students:
+                if student.student_id == student_id:
+                    self.students.remove(student)
+                    print("student removed")
+                    student_found = True
             if not student_found:
-                print("student not found")
+                raise Exception
+        except Exception:
+            print("Invalid student id")
 
     def search_student(self, student_id):
         student_found = False
         for student in self.students:
-            if student.student_id == student_id:
-                print(student)
+            if student.student_id==student_id:
+                print(student.display_student_details())
                 student_found = True
-            if not student_found:
-                print("student not found")
+        if not student_found:
+            print("student not found")
 
     def generate_student(self):
         for student in self.students:
@@ -60,7 +71,11 @@ class School:
 
 
 class AdvancedSchool(School):
-    def find_advanced_students(self, threshold, new_school):
-        for student in new_school:
+    def __init__(self):
+        super().__init__()
+        self.advanced_students=[]
+    def find_advanced_students(self, threshold, students):
+        for student in students:
             if student.average_grade > threshold:
-                print(student)
+                self.advanced_students.append(student)
+        return self.advanced_students
