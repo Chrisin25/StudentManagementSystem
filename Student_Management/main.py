@@ -23,8 +23,12 @@ while not stop:
         stop=True
 for student in new_school.generate_student():
     student.display_student_details()
-print("Advanced school students:")
+
 new_advanced_school=AdvancedSchool()
 student_list=new_advanced_school.find_advanced_students(60,new_school.students)
-for student in student_list:
-    student.display_student_details()
+if not student_list:
+    print("No student present in advanced school")
+else:
+    print("Advanced school students:")
+    for student in student_list:
+        student.display_student_details()
