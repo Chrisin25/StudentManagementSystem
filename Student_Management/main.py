@@ -4,7 +4,7 @@ new_school=School()
 print("new school created")
 stop=False
 while not stop:
-    choice = int(input("Enter your choice:1.add student 2.remove student 3.search student 4.generate student."))
+    choice = int(input("Enter your choice:1.add student 2.remove student 3.search student 4.display student."))
     if choice==1:
         new_school.add_student()
     elif choice==2:
@@ -14,7 +14,8 @@ while not stop:
         student_id=int(input("enter student id:"))
         new_school.search_student(student_id)
     elif choice==4:
-        new_school.generate_student()
+        for student in new_school.generate_student():
+            student.display_student_details()
     else:
         print("invalid choice")
     response=input("do you want to continue: y or n")
